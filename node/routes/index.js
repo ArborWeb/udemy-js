@@ -1,15 +1,13 @@
-let express = require("express");
+module.exports = app => {
 
-let routes = express.Router();
+	app.get("/", (req, res) => {
 
-routes.get("/", (req, res) => {
+		res.statusCode = 200;
 
-	res.statusCode = 200;
+		res.setHeader("Content-Type", "text/html");
 
-	res.setHeader("Content-Type", "text/html");
+		res.end("<h1>Ola Mundo</h1>")
 
-	res.end("<h1>Ola Mundo</h1>")
+	});
 
-});
-
-module.exports = routes;
+};
