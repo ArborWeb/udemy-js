@@ -1,3 +1,5 @@
+const { check, validationResult } = require('express-validator');
+
 let NeDB = require("nedb");
 
 let db = new NeDB({
@@ -40,7 +42,21 @@ module.exports = app => {
 		});		
 	});
 
-	route.post((req, res) => {
+	route.post([
+
+			check("name").notEmpty(),
+
+			check("senha").notEmpty()
+
+		], (req, res) => {
+
+		let errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+
+			return res.status(422).json({ errors: errors.array() });;
+
+		}
 
 
 		db.insert(req.body, (err, user) => {
