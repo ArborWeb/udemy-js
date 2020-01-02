@@ -12,26 +12,39 @@ module.exports = app => {
 
 	app.get("/users", (req, res) => {
 
-		res.statusCode = 200;
+		db.find({}).sort({ name: -1 }).exec((err, users) => {
 
-		res.setHeader("Content-Type", "application/json");
+			if(err) {
 
-		res.json({
+				console.log(`error: ${err}`);
+				res.status(400).json({
 
-			users: [{
+					error: err
 
-				name: "Guilherme",
+				})
 
-				age: 27
+			} else {
 
-			}]
+				res.statusCode = 200;
 
-		});
-		
+				res.setHeader("Content-Type", "application/json");
+
+				res.json({
+
+					users
+
+				});
+
+
+			}
+
+
+
+		});		
 	});
 
 	app.post("/users", (req, res) => {
-		
+
 
 		db.insert(req.body, (err, user) => {
 
