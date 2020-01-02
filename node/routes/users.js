@@ -85,11 +85,7 @@ module.exports = app => {
 
 	routeId.put((req, res) => {
 
-		db.update({
-
-			_id:req.params.id
-
-		}, req.body, err => {
+		db.update({ _id:req.params.id }, req.body, err => {
 
 			if (err) {
 
@@ -98,6 +94,24 @@ module.exports = app => {
 			} else {
 
 				res.status(200).json(Object.assign(req.params,req.body));
+
+			}
+
+		});
+
+	});
+
+	routeId.delete((req, res) => {
+
+		db.remove({ _id:req.params.id }, {}, err => {
+
+			if (err) {
+
+				app.utils.error.send(err, req, ress);
+				
+			} else {
+
+				res.status(200).json(req.params);
 
 			}
 
